@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import axios from "axios";
+// import './App.css';
 
 function App() {
+  const [drinks, setDrinks] = useState([]);
+  const [errMsg, setErrMsg] = useState("");
+  const [loading, setLoading] = useState(false);
+
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setErrMsg("");
+        const {
+          data: { drinks },
+        } = await axios.get(
+          `https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic`,
+          { headers: { "Content-Type": "application/json" } }
+        );
+        setDrinks(drinks);
+      } catch (err) {
+        setErrMsg(
+          "An error occurred while loading the API call! Please try again later!"
+        );
+      }
+    })();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {console.log(drinks)}
     </div>
   );
 }
