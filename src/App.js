@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Box } from '@mui/system';
 import axios from "axios";
 // import './App.css';
 
@@ -30,6 +31,14 @@ function App() {
   return (
     <div className="App">
       {console.log(drinks)}
+
+      <Box
+        sx={{
+          width: '100%',
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(5, 1fr)'
+        }}
+      />
     </div>
   );
 }
