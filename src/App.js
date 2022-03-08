@@ -1,37 +1,64 @@
 import { useEffect, useState } from "react";
-// import { Box } from "@mui/system";
 import Box from "@mui/material/Box";
-// import Grid from '@mui/material/Grid';
-// import { makeStyles } from "@material-ui/core";
 import { styled } from "@mui/material/styles";
 import axios from "axios";
 // import './App.css';
 
-const ImageCard = ({ idDrink, strDrink, strDrinkThumb }) => {
+const ImageCard = ({ strDrink, strDrinkThumb }) => {
   const [hover, setHover] = useState(false);
 
-  const invertHover = () => {
-    setHover(prev => !prev);
+  const imgCardStyles = {
+    imgWrap: {
+      position: "relative"
+    },
+    img: {
+      width: "100%",
+      height: "100%"
+    },
+    imgDescription: {
+      display: "flex",
+      margin: "0",
+      position: "absolute",
+      top: 0,
+      background: "rgba(29, 106, 154, 0.72)",
+      color: "white",
+      width: "100%",
+      height: "100%",
+      alignItems: "center",
+      justifyContent: "center",
+      overflowWrap: "break-word",
+    }
   }
 
-  return (<Box key={idDrink} sx={{
-    position: 'relative',
-  }}
-  onMouseOver={() => invertHover()}
-  onMouseOut={() => invertHover()}>
-    <Box
-      className="img"
-      component="img"
-      sx={{
-        width: '100%',
-      }}
-      alt={strDrink}
-      src={strDrinkThumb}
-    />
-    {hover && <p className="img-description">{strDrink}</p>}
-  </Box>);
+  const invertHover = () => {
+    setHover((prev) => !prev);
+  };
 
-}
+  return (
+    <Box
+      sx={imgCardStyles.imgWrap}
+    >
+      <Box
+        className="img"
+        component="img"
+        sx={imgCardStyles.img}
+        alt={strDrink}
+        src={strDrinkThumb}
+        onMouseOver={() => invertHover()}
+      />
+      {hover && (
+        <Box
+          component="p"
+          className="img-description"
+          onMouseOut={() => invertHover()}
+          sx={imgCardStyles.imgDescription}
+        >
+          {strDrink}
+        </Box>
+      )}
+    </Box>
+  );
+};
 const GridLayout = styled(Box)(({ theme }) => ({
   display: "grid",
   gap: ".3rem .5rem",
@@ -49,10 +76,8 @@ const GridLayout = styled(Box)(({ theme }) => ({
 }));
 
 function App() {
-  // const { classes } = useStyles();
   const [drinks, setDrinks] = useState([]);
   const [errMsg, setErrMsg] = useState("");
-  // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -73,26 +98,14 @@ function App() {
     })();
   }, []);
 
-  // https://mui.com/system/basics/
   const displayDrinks = drinks.map((drink) => (
-    <ImageCard {...drink} />
+    <ImageCard key={drink.idDrink} {...drink} />
   ));
 
   return (
     <div className="App">
       <GridLayout>
-        {/* <Grid
-      // sx={{
-      //   width: "100%",
-      //   display: "grid",
-      //   gridTemplateColumns: "repeat(5, 1fr)",
-      //   gap: 1,
-      // }}
-      container 
-      columns={{ xs: 1 , sm: 2, md: 3, lg: 5 }}
-      spacing={1}
-      > */}
-        {displayDrinks}
+        {errMsg || displayDrinks}
       </GridLayout>
     </div>
   );
