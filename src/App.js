@@ -1,26 +1,26 @@
 import { useEffect, useState } from "react";
 // import { Box } from "@mui/system";
-import Box from '@mui/material/Box';
+import Box from "@mui/material/Box";
 // import Grid from '@mui/material/Grid';
 // import { makeStyles } from "@material-ui/core";
-import { styled, createTheme } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 import axios from "axios";
 // import './App.css';
 
 const GridLayout = styled(Box)(({ theme }) => ({
-    width: "100%",
-    display: "grid",
-    gap: 1,
-    gridTemplateColumns: "1fr",
-    [theme.breakpoints.up('sm')]: {
-      gridTemplateColumns: "repeat(2, 1fr)",
-    },
-    [theme.breakpoints.up('md')]: {
-      gridTemplateColumns: "repeat(3, 1fr)",
-    },
-    [theme.breakpoints.up('lg')]: {
-      gridTemplateColumns: "repeat(5, 1fr)",
-    },
+  display: "grid",
+  gap: "1rem",
+  padding: "1rem",
+  gridTemplateColumns: "1fr",
+  [theme.breakpoints.up("sm")]: {
+    gridTemplateColumns: "repeat(2, 1fr)",
+  },
+  [theme.breakpoints.up("md")]: {
+    gridTemplateColumns: "repeat(3, 1fr)",
+  },
+  [theme.breakpoints.up("lg")]: {
+    gridTemplateColumns: "repeat(5, 1fr)",
+  },
 }));
 
 function App() {
@@ -48,19 +48,27 @@ function App() {
     })();
   }, []);
 
+  // https://mui.com/system/basics/
   const displayDrinks = drinks.map(({ idDrink, strDrink, strDrinkThumb }) => (
-      <div key={idDrink}>
-        <h1>
-          {/* <img src={strDrinkThumb} alt={strDrink} />  */}
-          {strDrink}
-        </h1>
-      </div>
+    <Box key={idDrink}>
+      <Box
+        component="img"
+        sx={{
+          width: '100%',
+        }}
+        alt={strDrink}
+        src={strDrinkThumb}
+      />
+      <h1>
+        {strDrink}
+      </h1>
+    </Box>
   ));
 
   return (
     <div className="App">
-       <GridLayout>
-      {/* <Grid
+      <GridLayout>
+        {/* <Grid
       // sx={{
       //   width: "100%",
       //   display: "grid",
@@ -72,7 +80,7 @@ function App() {
       spacing={1}
       > */}
         {displayDrinks}
-        </GridLayout>
+      </GridLayout>
     </div>
   );
 }
