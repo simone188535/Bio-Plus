@@ -1,4 +1,10 @@
 # BioPlus
+
+## Description
+
+React project utilizing material ui v5 for styling. This project displays a list of mocktails in a grid style format to the user. The grid is responsive and resizes when
+the browser does. The api is: https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic .
+
 ## Installation
 
 First clone the project:
